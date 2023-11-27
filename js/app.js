@@ -1,6 +1,16 @@
-import {Contacto, prueba} from "./classContacto.js";
+import Contacto from "./classContacto.js";
 
-const contactoNuevo = new Contacto(1,'algun nombre', 'apellido', 'sadfsdf@fsdf.com', 23423423);
-console.log(contactoNuevo)
+//variables globales
+// const contactoNuevo = new Contacto(1,'algun nombre', 'apellido', 'sadfsdf@fsdf.com', 23423423);
+const agenda = [];
+const formularioContacto = document.querySelector('form');
+console.log(formularioContacto);
 
-console.log(prueba);
+// funciones
+const crearContacto = ()=>{
+
+}
+
+// logica
+formularioContacto.addEventListener('submit', crearContacto)
+
