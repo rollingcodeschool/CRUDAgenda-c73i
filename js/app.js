@@ -29,6 +29,8 @@ const crearContacto = (e) => {
   guardarEnLocalstorage();
   console.log(agenda);
   limpiarFormulario();
+  //dibujar una fila
+  crearFila(contactoNuevo, agenda.length);
 };
 
 const guardarEnLocalstorage = () =>{
