@@ -48,6 +48,16 @@
     set telefono(nuevoTelefono) {
       this.#telefono = nuevoTelefono;
     }
+
+    toJSON(){
+      return {
+        id: this.id,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        email: this.email,
+        telefono: this.telefono
+      }
+    }
   
   }
   
