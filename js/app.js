@@ -64,21 +64,42 @@ const crearFila = (contacto, fila) => {
 };
 
 window.borrarContacto = (idContacto) => {
-  console.log("desde la funcion borrar Contacto");
-  //buscar por id un contacto y obtener su posicion. findIndex
-  const posicionContactoBuscado = agenda.findIndex(
-    (contacto) => contacto.id === idContacto
-  );
-  console.log(posicionContactoBuscado);
-  //borrarlo del array - splice(posicion del elemento, cuantos quiero borrar)
-  agenda.splice(posicionContactoBuscado, 1);
-  //actualizar el localstorage
-  guardarEnLocalstorage();
-  //borrar la fila de la tabla
-  const tablaContacto = document.querySelector('tbody');
-  console.log(tablaContacto.children[posicionContactoBuscado])
-  tablaContacto.removeChild(tablaContacto.children[posicionContactoBuscado])
-  //actualizar todos los td de la tabla con el numero de fila correcto.
+  Swal.fire({
+    title: "¿Estas seguro de borrar el contacto?",
+    text: "No puedes revertir este paso posteriormente",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Borrar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //agregar la logica para borrar el contacto
+      console.log("desde la funcion borrar Contacto");
+      //buscar por id un contacto y obtener su posicion. findIndex
+      const posicionContactoBuscado = agenda.findIndex(
+        (contacto) => contacto.id === idContacto
+      );
+      console.log(posicionContactoBuscado);
+      //borrarlo del array - splice(posicion del elemento, cuantos quiero borrar)
+      agenda.splice(posicionContactoBuscado, 1);
+      //actualizar el localstorage
+      guardarEnLocalstorage();
+      //borrar la fila de la tabla
+      const tablaContacto = document.querySelector("tbody");
+      console.log(tablaContacto.children[posicionContactoBuscado]);
+      tablaContacto.removeChild(
+        tablaContacto.children[posicionContactoBuscado]
+      );
+      // actualizar todos los td de la tabla con el numero de fila correcto.
+      Swal.fire({
+        title: "Contacto eliminado",
+        text: "El contacto seleccionado fue eliminado correctamente",
+        icon: "success",
+      });
+    }
+  });
 };
 
 // logica
