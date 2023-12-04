@@ -2,7 +2,7 @@ import Contacto from "./classContacto.js";
 
 //variables globales
 // const contactoNuevo = new Contacto(1,'algun nombre', 'apellido', 'sadfsdf@fsdf.com', 23423423);
-const agenda = JSON.parse(localStorage.getItem('agendaKey')) || [];
+const agenda = JSON.parse(localStorage.getItem("agendaKey")) || [];
 const formularioContacto = document.querySelector("form");
 const nombre = document.querySelector("#nombre"),
   apellido = document.querySelector("#apellido"),
@@ -33,23 +33,23 @@ const crearContacto = (e) => {
   crearFila(contactoNuevo, agenda.length);
 };
 
-const guardarEnLocalstorage = () =>{
-    localStorage.setItem('agendaKey', JSON.stringify(agenda));
-}
+const guardarEnLocalstorage = () => {
+  localStorage.setItem("agendaKey", JSON.stringify(agenda));
+};
 
-const limpiarFormulario = () =>{
-    formularioContacto.reset();
-}
+const limpiarFormulario = () => {
+  formularioContacto.reset();
+};
 
-const cargaInicial = () =>{
-    if(agenda.length > 0){
-        agenda.map((contacto, posicion)=> crearFila(contacto, posicion + 1) )
-    }
-}
+const cargaInicial = () => {
+  if (agenda.length > 0) {
+    agenda.map((contacto, posicion) => crearFila(contacto, posicion + 1));
+  }
+};
 
-const crearFila = (contacto, fila) =>{
-    const tablaContacto = document.querySelector('#tablaContacto');
-    tablaContacto.innerHTML += `<tr>
+const crearFila = (contacto, fila) => {
+  const tablaContacto = document.querySelector("#tablaContacto");
+  tablaContacto.innerHTML += `<tr>
     <th scope="row">${fila}</th>
     <td>${contacto.nombre}</td>
     <td>${contacto.apellido}</td>
@@ -58,10 +58,24 @@ const crearFila = (contacto, fila) =>{
     <td>
       <a class="btn btn-primary" href="./pages/detalleContacto.html">Ver mas</a>
       <button class="btn btn-warning">Editar</button>
-      <button class="btn btn-danger">Borrar</button>
+      <button class="btn btn-danger" onclick="borrarContacto('${contacto.id}')">Borrar</button>
     </td>
-  </tr>`
-}
+  </tr>`;
+};
+
+window.borrarContacto = (idContacto) => {
+  console.log("desde la funcion borrar Contacto");
+  //buscar por id un contacto y obtener su posicion. findIndex
+  const posicionContactoBuscado = agenda.findIndex(
+    (contacto) => contacto.id === idContacto
+  );
+  console.log(posicionContactoBuscado);
+  //borrarlo del array - splice(posicion del elemento, cuantos quiero borrar)
+  agenda.splice(posicionContactoBuscado, 1);
+  //actualizar el localstorage
+  guardarEnLocalstorage();
+  //borrar la fila de la tabla
+};
 
 // logica
 formularioContacto.addEventListener("submit", crearContacto);
