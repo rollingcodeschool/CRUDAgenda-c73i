@@ -1,4 +1,5 @@
 import Contacto from "./classContacto.js";
+import { validarCantidadCaracteres } from "./validaciones.js";
 
 //variables globales
 // const contactoNuevo = new Contacto(1,'algun nombre', 'apellido', 'sadfsdf@fsdf.com', 23423423);
@@ -15,22 +16,30 @@ const crearContacto = (e) => {
   e.preventDefault();
   console.log("desde la funcion crear Contacto");
   //validar los datos ingresados por el usuario
-  //crear el objeto con los datos del formulario
-  const contactoNuevo = new Contacto(
-    crypto.randomUUID(),
-    nombre.value,
-    apellido.value,
-    email.value,
-    telefono.value
-  );
-  //guardar el objeto en un array agenda
-  agenda.push(contactoNuevo);
-  //guardar la agenda en localstorage
-  guardarEnLocalstorage();
-  console.log(agenda);
-  limpiarFormulario();
-  //dibujar una fila
-  crearFila(contactoNuevo, agenda.length);
+  if (
+    validarCantidadCaracteres(nombre.value, 3, 50) &&
+    validarCantidadCaracteres(apellido.value, 4, 40)
+  ) {
+    //los datos son validos
+    //crear el objeto con los datos del formulario
+    const contactoNuevo = new Contacto(
+      crypto.randomUUID(),
+      nombre.value,
+      apellido.value,
+      email.value,
+      telefono.value
+    );
+    //guardar el objeto en un array agenda
+    agenda.push(contactoNuevo);
+    //guardar la agenda en localstorage
+    guardarEnLocalstorage();
+    console.log(agenda);
+    limpiarFormulario();
+    //dibujar una fila
+    crearFila(contactoNuevo, agenda.length);
+  }else{
+    alert('cargaste datos erroneos')
+  }
 };
 
 const guardarEnLocalstorage = () => {
@@ -102,10 +111,11 @@ window.borrarContacto = (idContacto) => {
   });
 };
 
-window.detalleContacto = (idContacto) =>{
-  console.log(window.location)
-  window.location.href = window.location.origin +'/pages/detalleContacto.html?id='+ idContacto;
-}
+window.detalleContacto = (idContacto) => {
+  console.log(window.location);
+  window.location.href =
+    window.location.origin + "/pages/detalleContacto.html?id=" + idContacto;
+};
 // logica
 formularioContacto.addEventListener("submit", crearContacto);
 
